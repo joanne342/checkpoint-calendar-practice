@@ -13,17 +13,13 @@ const yearInput = document.querySelector("#year-input");
 const monthNames = [
   "January", "February", "March", "April",
   "May", "June", "July", "August",
-  "September", "October", "November", "December",
+  "September", "October", "November", "December"
 ];
 
 let currentDate = new Date();
-currentDate = new Date(
-  currentDate.getFullYear(),
-  currentDate.getMonth(),
-  1
-);
+currentDate.setDate(1);
 
-// Populate the month dropdown.
+// Populate the month selector.
 monthNames.forEach((month, index) => {
   const option = document.createElement("option");
   option.value = index;
@@ -31,6 +27,7 @@ monthNames.forEach((month, index) => {
   monthSelect.appendChild(option);
 });
 
+// Calculate commemorative days using shared date logic.
 function getCommemorativeDays(year, monthIndex) {
   return daysData.flatMap((day) => {
     const eventMonth = monthNames.indexOf(day.monthName);
@@ -48,9 +45,16 @@ function getCommemorativeDays(year, monthIndex) {
 
     return [{
       name: day.name,
-      date: date.getDate(),
+      date: date.getDate()
     }];
   });
+}
+
+function createEmptyCell() {
+  const cell = document.createElement("div");
+  cell.className = "calendar-day empty-day";
+  cell.setAttribute("aria-hidden", "true");
+  return cell;
 }
 
 function displayCalendar() {
@@ -65,62 +69,56 @@ function displayCalendar() {
   monthSelect.value = String(month);
   yearInput.value = String(year);
 
-  // Remove previously generated date boxes,
-  // keeping the seven weekday headings.
-  calendar.querySelectorAll(".calendar-day").forEach((box) => {
-    box.remove();
+  // Remove old date cells but keep weekday headings.
+  calendar.querySelectorAll(".calendar-day").forEach((cell) => {
+    cell.remove();
   });
 
   const firstWeekday = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-
   const commemorativeDays = getCommemorativeDays(year, month);
 
-  // Add empty boxes before the first day.
+  // Align the first day under the correct weekday.
   for (let i = 0; i < firstWeekday; i++) {
-    const emptyBox = document.createElement("div");
-    emptyBox.className = "calendar-day";
-    emptyBox.setAttribute("aria-hidden", "true");
-    calendar.appendChild(emptyBox);
+    calendar.appendChild(createEmptyCell());
   }
 
-  // Generate every day in the month.
+  // Generate the dates dynamically.
   for (let day = 1; day <= daysInMonth; day++) {
-    const dayBox = document.createElement("div");
-    dayBox.className = "calendar-day";
+    const cell = document.createElement("div");
+    cell.className = "calendar-day";
 
-    const dayNumber = document.createElement("span");
-    dayNumber.className = "day-number";
-    dayNumber.textContent = day;
-    dayBox.appendChild(dayNumber);
+    const number = document.createElement("span");
+    number.className = "day-number";
+    number.textContent = day;
+
+    cell.appendChild(number);
 
     const events = commemorativeDays.filter(
       (event) => event.date === day
     );
 
     events.forEach((event) => {
-      const eventLabel = document.createElement("span");
-      eventLabel.className = "commemorative-day";
-      eventLabel.textContent = event.name;
-      dayBox.appendChild(eventLabel);
+      const label = document.createElement("span");
+      label.className = "commemorative-day";
+      label.textContent = event.name;
+
+      cell.appendChild(label);
     });
 
-    calendar.appendChild(dayBox);
+    calendar.appendChild(cell);
   }
 
-  // Complete the final week without adding an extra
-  // row when the month already ends on Saturday.
-  const dateBoxes = firstWeekday + daysInMonth;
-  const trailingBoxes = (7 - (dateBoxes % 7)) % 7;
+  // Finish the last week without adding an unnecessary row.
+  const usedCells = firstWeekday + daysInMonth;
+  const remainingCells = (7 - (usedCells % 7)) % 7;
 
-  for (let i = 0; i < trailingBoxes; i++) {
-    const emptyBox = document.createElement("div");
-    emptyBox.className = "calendar-day";
-    emptyBox.setAttribute("aria-hidden", "true");
-    calendar.appendChild(emptyBox);
+  for (let i = 0; i < remainingCells; i++) {
+    calendar.appendChild(createEmptyCell());
   }
 }
 
+// Navigate to the previous month.
 previousButton.addEventListener("click", () => {
   currentDate = new Date(
     currentDate.getFullYear(),
@@ -131,6 +129,7 @@ previousButton.addEventListener("click", () => {
   displayCalendar();
 });
 
+// Navigate to the next month.
 nextButton.addEventListener("click", () => {
   currentDate = new Date(
     currentDate.getFullYear(),
@@ -141,29 +140,33 @@ nextButton.addEventListener("click", () => {
   displayCalendar();
 });
 
+// Jump to a selected month and year.
 datePicker.addEventListener("submit", (event) => {
   event.preventDefault();
-
-  if (!yearInput.checkValidity()) {
-    yearInput.reportValidity();
-    return;
-  }
 
   const year = Number(yearInput.value);
   const month = Number(monthSelect.value);
 
-  if (!Number.isSafeInteger(year)) {
+  if (
+    !Number.isSafeInteger(year) ||
+    !Number.isInteger(month) ||
+    month < 0 ||
+    month > 11 ||
+    !yearInput.value.trim()
+  ) {
     yearInput.reportValidity();
     return;
   }
 
   currentDate = new Date(year, month, 1);
-
-  // JavaScript treats years 0–99 specially in this constructor.
-  // Correct those years so the selector works consistently.
   currentDate.setFullYear(year);
+
+  if (Number.isNaN(currentDate.getTime())) {
+    return;
+  }
 
   displayCalendar();
 });
 
+// Display the current month when the page opens.
 displayCalendar();
