@@ -13,52 +13,46 @@
     <main>
       <h1>Days Calendar</h1>
 
-      <section aria-labelledby="calendar-heading">
-        <h2 id="calendar-heading">Calendar</h2>
+      <form id="date-picker" class="date-picker">
+        <label for="month-select">Month</label>
+        <select id="month-select"></select>
 
-        <div class="calendar-controls">
-          <button id="previous-month" type="button">
-            Previous Month
-          </button>
+        <label for="year-input">Year</label>
+        <input
+          id="year-input"
+          type="number"
+          step="1"
+          required
+        />
 
-          <label for="month-select">Month</label>
-          <select id="month-select"></select>
+        <button type="submit">Go to date</button>
+      </form>
 
-          <label for="year-select">Year</label>
-          <select id="year-select"></select>
+      <div class="calendar-controls">
+        <button id="previous-month" type="button">
+          Previous Month
+        </button>
 
-          <button id="next-month" type="button">
-            Next Month
-          </button>
-        </div>
+        <h2 id="current-month" aria-live="polite"></h2>
 
-        <h3 id="current-month" aria-live="polite"></h3>
+        <button id="next-month" type="button">
+          Next Month
+        </button>
+      </div>
 
-        <div
-          class="calendar-grid"
-          id="calendar"
-          aria-label="Calendar"
-        >
-          <div class="weekday">Sunday</div>
-          <div class="weekday">Monday</div>
-          <div class="weekday">Tuesday</div>
-          <div class="weekday">Wednesday</div>
-          <div class="weekday">Thursday</div>
-          <div class="weekday">Friday</div>
-          <div class="weekday">Saturday</div>
-        </div>
-
-        <section
-          id="day-description"
-          aria-labelledby="description-heading"
-          hidden
-        >
-          <h3 id="description-heading">About this day</h3>
-          <p id="description-text"></p>
-        </section>
-
-        <p id="calendar-error" role="status"></p>
-      </section>
+      <div
+        class="calendar-grid"
+        id="calendar"
+        aria-label="Monthly calendar"
+      >
+        <div class="weekday">Sunday</div>
+        <div class="weekday">Monday</div>
+        <div class="weekday">Tuesday</div>
+        <div class="weekday">Wednesday</div>
+        <div class="weekday">Thursday</div>
+        <div class="weekday">Friday</div>
+        <div class="weekday">Saturday</div>
+      </div>
     </main>
   </body>
 </html>
