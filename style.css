@@ -1,0 +1,128 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 20px;
+  color: #222;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+button,
+select {
+  padding: 10px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px 2px;
+}
+
+.calendar-day {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 70px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
+}
+
+.calendar-day.empty {
+  border: none;
+}
+
+.calendar-day.today {
+  border: 2px solid black;
+}
+
+.commemorative-day {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 5px;
+  text-align: left;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  background-color: #e8f0fe;
+  border: 1px solid #9bb8e8;
+  border-radius: 3px;
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid orange;
+  outline-offset: 2px;
+}
+
+#day-description {
+  margin-top: 24px;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+#day-description h3 {
+  text-align: left;
+}
+
+#calendar-error {
+  color: #a00000;
+}
+
+@media (max-width: 600px) {
+  body {
+    margin: 5px;
+  }
+
+  main {
+    padding: 8px;
+  }
+
+  .calendar-grid {
+    gap: 2px;
+  }
+
+  .calendar-day {
+    padding: 4px;
+    min-height: 55px;
+    font-size: 0.85rem;
+  }
+
+  .weekday {
+    font-size: 0.75rem;
+    padding: 5px 1px;
+  }
+
+  .commemorative-day {
+    padding: 3px;
+    font-size: 0.7rem;
+  }
+}
