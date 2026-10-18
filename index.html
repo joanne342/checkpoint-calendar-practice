@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,21 +13,52 @@
     <main>
       <h1>Days Calendar</h1>
 
-      <div class="calendar-controls">
-        <button id="previous-month">Previous Month</button>
-        <h2 id="current-month"></h2>
-        <button id="next-month">Next Month</button>
-      </div>
+      <section aria-labelledby="calendar-heading">
+        <h2 id="calendar-heading">Calendar</h2>
 
-      <div class="calendar-grid" id="calendar">
-        <div class="weekday">Sunday</div>
-        <div class="weekday">Monday</div>
-        <div class="weekday">Tuesday</div>
-        <div class="weekday">Wednesday</div>
-        <div class="weekday">Thursday</div>
-        <div class="weekday">Friday</div>
-        <div class="weekday">Saturday</div>
-      </div>
+        <div class="calendar-controls">
+          <button id="previous-month" type="button">
+            Previous Month
+          </button>
+
+          <label for="month-select">Month</label>
+          <select id="month-select"></select>
+
+          <label for="year-select">Year</label>
+          <select id="year-select"></select>
+
+          <button id="next-month" type="button">
+            Next Month
+          </button>
+        </div>
+
+        <h3 id="current-month" aria-live="polite"></h3>
+
+        <div
+          class="calendar-grid"
+          id="calendar"
+          aria-label="Calendar"
+        >
+          <div class="weekday">Sunday</div>
+          <div class="weekday">Monday</div>
+          <div class="weekday">Tuesday</div>
+          <div class="weekday">Wednesday</div>
+          <div class="weekday">Thursday</div>
+          <div class="weekday">Friday</div>
+          <div class="weekday">Saturday</div>
+        </div>
+
+        <section
+          id="day-description"
+          aria-labelledby="description-heading"
+          hidden
+        >
+          <h3 id="description-heading">About this day</h3>
+          <p id="description-text"></p>
+        </section>
+
+        <p id="calendar-error" role="status"></p>
+      </section>
     </main>
   </body>
 </html>
