@@ -7,32 +7,48 @@ body {
 }
 
 main {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
   padding: 20px;
   background-color: white;
+  border-radius: 8px;
 }
 
-h1,
-h2,
-h3 {
+h1 {
   text-align: center;
 }
 
-.calendar-controls {
+.date-picker {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+  margin: 24px 0;
+}
+
+select,
+input,
+button {
+  font: inherit;
+  padding: 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   margin: 20px 0;
 }
 
-button,
-select {
-  padding: 10px;
-  cursor: pointer;
-  font: inherit;
+.calendar-controls h2 {
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 .calendar-grid {
@@ -45,80 +61,70 @@ select {
   text-align: center;
   font-weight: bold;
   padding: 10px 2px;
+  background-color: #e8e8e8;
 }
 
 .calendar-day {
   border: 1px solid #ccc;
-  padding: 10px;
-  min-height: 70px;
+  padding: 8px;
   min-width: 0;
+  min-height: 85px;
   overflow-wrap: anywhere;
-  box-sizing: border-box;
 }
 
-.calendar-day.empty {
-  border: none;
-}
-
-.calendar-day.today {
-  border: 2px solid black;
+.day-number {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
 .commemorative-day {
   display: block;
-  width: 100%;
-  margin-top: 6px;
+  margin-top: 5px;
   padding: 5px;
-  text-align: left;
+  background-color: #e5f1ff;
+  border-radius: 4px;
   font-size: 0.85rem;
-  overflow-wrap: anywhere;
-  background-color: #e8f0fe;
-  border: 1px solid #9bb8e8;
-  border-radius: 3px;
 }
 
 button:focus-visible,
-select:focus-visible {
-  outline: 3px solid orange;
+select:focus-visible,
+input:focus-visible {
+  outline: 3px solid #b45309;
   outline-offset: 2px;
-}
-
-#day-description {
-  margin-top: 24px;
-  padding: 15px;
-  border: 1px solid #ccc;
-}
-
-#day-description h3 {
-  text-align: left;
-}
-
-#calendar-error {
-  color: #a00000;
 }
 
 @media (max-width: 600px) {
   body {
-    margin: 5px;
+    margin: 8px;
   }
 
   main {
     padding: 8px;
   }
 
-  .calendar-grid {
-    gap: 2px;
+  .calendar-controls {
+    gap: 5px;
+  }
+
+  .calendar-controls button {
+    padding: 8px 4px;
+    font-size: 0.8rem;
+  }
+
+  .calendar-controls h2 {
+    font-size: 1rem;
+  }
+
+  .weekday {
+    font-size: 0.7rem;
+    padding: 8px 0;
+    overflow-wrap: anywhere;
   }
 
   .calendar-day {
     padding: 4px;
-    min-height: 55px;
-    font-size: 0.85rem;
-  }
-
-  .weekday {
-    font-size: 0.75rem;
-    padding: 5px 1px;
+    min-height: 65px;
   }
 
   .commemorative-day {
