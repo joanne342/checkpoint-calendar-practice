@@ -2,7 +2,6 @@
   "name": "project-days-calendar",
   "version": "1.0.0",
   "scripts": {
-    "test": "node common.test.mjs",
-    "generate-ical": "node generate-ical.mjs"
+    "test": "node common.test.mjs"
   }
 }
