@@ -58,10 +58,18 @@ export function getDateForOccurrence(year, month, weekday, occurrence) {
     : dates[occurrenceNumber - 1];
 }
 
-export function getCommemorativeDayDate(day, year) {
-  const monthIndex = months.findIndex(
-    month => month.toLowerCase() === day.month.toLowerCase()
-  );
+export function getCommemorativeDayDate(day, year, weekday, occurrence) {
+  // Support either a day object or separate arguments.
+  if (typeof day === "string") {
+    return getDateForOccurrence(year, day, weekday, occurrence);
+  }
+
+  const month = day.month;
+  const dayOfWeek = day.weekday;
+  const dayOccurrence = day.occurrence;
+
+  return getDateForOccurrence(year, month, dayOfWeek, dayOccurrence);
+}
 
   if (monthIndex === -1) {
     throw new Error(`Unknown month: ${day.month}`);
@@ -77,9 +85,22 @@ export function getCommemorativeDayDate(day, year) {
 
 export function getDaysForDate(days, year, month, date) {
   return days.filter(day => {
-    const dayMonth = months.findIndex(
+    const monthIndex = typeof month === "number"
+      ? month
+      : months.findIndex(
+          name => name.toLowerCase() === month.toLowerCase()
+        );
+
+    const dayMonthIndex = months.findIndex(
       name => name.toLowerCase() === day.month.toLowerCase()
     );
+
+    return (
+      dayMonthIndex === monthIndex &&
+      getCommemorativeDayDate(day, year) === date
+    );
+  });
+}
 
     return (
       dayMonth === month &&
