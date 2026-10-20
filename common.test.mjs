@@ -1,4 +1,3 @@
-```javascript
 // Import Node.js's strict assertion module.
 // This provides methods for checking whether values match expected results
 // and whether functions behave as expected when errors occur.
@@ -120,4 +119,4 @@ test("rejects an invalid weekday", () => {
     /Unknown weekday/
   );
 });
-```
+
