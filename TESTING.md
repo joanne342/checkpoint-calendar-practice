@@ -33,5 +33,5 @@
 ### For groups of at least 2
 
 * Upon running the supplied file with `node`, `days.ics` is generated.  Upon importing the file into Google Calendar, the dates are the same as in the web UI.
-* The events in the calendar are whole-day events wihpthout a start/end time.
+* The events in the calendar are whole-day events without a start/end time.
 * Logic for calculating dates is shared between the web generator and the iCal generator.
