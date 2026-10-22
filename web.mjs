@@ -1,6 +1,5 @@
-
 import daysData from "./days.json" with { type: "json" };
-import { getDateForOccurrence } from "./common.mjs";
+import { getDateForOccurrence, monthNames } from "./common.mjs";
 
 const calendar = document.querySelector("#calendar");
 const currentMonth = document.querySelector("#current-month");
@@ -9,12 +8,6 @@ const nextButton = document.querySelector("#next-month");
 const datePicker = document.querySelector("#date-picker");
 const monthSelect = document.querySelector("#month-select");
 const yearInput = document.querySelector("#year-input");
-
-const monthNames = [
-  "January", "February", "March", "April",
-  "May", "June", "July", "August",
-  "September", "October", "November", "December"
-];
 
 let currentDate = new Date();
 currentDate.setDate(1);
@@ -40,13 +33,15 @@ function getCommemorativeDays(year, monthIndex) {
       year,
       eventMonth,
       day.dayName,
-      day.occurrence
+      day.occurrence,
     );
 
-    return [{
-      name: day.name,
-      date: date.getDate()
-    }];
+    return [
+      {
+        name: day.name,
+        date: date.getDate(),
+      },
+    ];
   });
 }
 
@@ -61,10 +56,10 @@ function displayCalendar() {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  currentMonth.textContent = currentDate.toLocaleDateString(
-    "en-GB",
-    { month: "long", year: "numeric" }
-  );
+  currentMonth.textContent = currentDate.toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+  });
 
   monthSelect.value = String(month);
   yearInput.value = String(year);
@@ -94,9 +89,7 @@ function displayCalendar() {
 
     cell.appendChild(number);
 
-    const events = commemorativeDays.filter(
-      (event) => event.date === day
-    );
+    const events = commemorativeDays.filter((event) => event.date === day);
 
     events.forEach((event) => {
       const label = document.createElement("span");
@@ -118,26 +111,24 @@ function displayCalendar() {
   }
 }
 
-// Navigate to the previous month.
-previousButton.addEventListener("click", () => {
+function changeMonth(amount) {
   currentDate = new Date(
     currentDate.getFullYear(),
-    currentDate.getMonth() - 1,
-    1
+    currentDate.getMonth() + amount,
+    1,
   );
 
   displayCalendar();
+}
+
+// Navigate to the previous month.
+previousButton.addEventListener("click", () => {
+  changeMonth(-1);
 });
 
 // Navigate to the next month.
 nextButton.addEventListener("click", () => {
-  currentDate = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth() + 1,
-    1
-  );
-
-  displayCalendar();
+  changeMonth(1);
 });
 
 // Jump to a selected month and year.
